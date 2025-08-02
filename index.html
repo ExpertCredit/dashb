@@ -2,40 +2,14 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Дашборд Looker</title>
+  <title>Дашборд Looker Studio без логотипа</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
-      background: #f9f9f9;
+      background-color: #f9f9f9;
       font-family: sans-serif;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .dashboard-wrapper {
-      position: relative;
-      width: 100%;
-      padding-top: 75%; /* Соотношение сторон 4:3 */
-    }
-
-    iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
     }
 
     h1 {
@@ -44,23 +18,41 @@
       margin: 20px 0;
     }
 
+    .iframe-container {
+      position: relative;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 75%; /* Соотношение сторон 4:3 */
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .iframe-container iframe {
+      position: absolute;
+      top: -30px; /* Поднять iframe вверх, чтобы скрыть нижнюю часть */
+      left: 0;
+      width: 100%;
+      height: 120%; /* Чуть больше, чем контейнер */
+      border: none;
+    }
+
     @media (max-width: 768px) {
-      .dashboard-wrapper {
-        padding-top: 75%; /* То же соотношение сторон */
+      .iframe-container {
+        padding-top: 80%; /* Под мобильный экран */
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>📊 Дашборд Looker Studio</h1>
-    <div class="dashboard-wrapper">
-      <iframe 
-        src="https://lookerstudio.google.com/embed/reporting/e04b05a2-dd6b-49c5-a185-7b2b3704ca54/page/APRTF"
-        allowfullscreen
-        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
-      </iframe>
-    </div>
+  <h1>📊 Дашборд Looker Studio</h1>
+  <div class="iframe-container">
+    <iframe
+      src="https://lookerstudio.google.com/embed/reporting/e04b05a2-dd6b-49c5-a185-7b2b3704ca54/page/APRTF"
+      allowfullscreen
+      sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+    </iframe>
   </div>
 </body>
 </html>
