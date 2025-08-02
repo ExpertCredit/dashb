@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard из Google Таблицы</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    h1 {
+      color: #4cc9f0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 6px 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #4cc9f0;
+      color: #fff;
+    }
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    .updated {
+      font-size: 12px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>📊 Дашборд Google Таблицы (A–AA)</h1>
+  <div class="updated" id="last-updated">Обновляется…</div>
+  <table id="sheet-table"></table>
+
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script>
+    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkqc0HnxXWYQuMhj3372NTgJUPbGfFF8abMVFLq9hVG2p3J7-ouNRB1mEzihhCQX5teDgahRW5C4Nw/pub?gid=14089623&single=true&output=csv";
+
+    function loadSheet() {
+      fetch(csvUrl)
+        .then(response => response.text())
+        .then(csvText => {
+          const data = Papa.parse(csvText, { header: false }).data;
+          const table = document.getElementById('sheet-table');
+          table.innerHTML = "";
+
+          data.forEach((row, rowIndex) => {
+            const tr = document.createElement("tr");
+            row.slice(0, 27).forEach(cell => {
+              const td = document.createElement(rowIndex === 0 ? "th" : "td");
+              td.textContent = cell;
+              tr.appendChild(td);
+            });
+            table.appendChild(tr);
+          });
+
+          document.getElementById("last-updated").textContent = "Последнее обновление: " + new Date().toLocaleTimeString();
+        })
+        .catch(error => {
+          console.error("Ошибка загрузки таблицы:", error);
+        });
+    }
+
+    // Загружаем при старте
+    loadSheet();
+
+    // Обновляем каждые 10 секунд
+    setInterval(loadSheet, 10000);
+  </script>
+</body>
+</html>
