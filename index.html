@@ -2,73 +2,65 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Дашборд с графиком</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <title>Дашборд Looker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <style>
-    body {
-      font-family: sans-serif;
-      margin: 30px;
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
       background: #f9f9f9;
+      font-family: sans-serif;
     }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .dashboard-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 75%; /* Соотношение сторон 4:3 */
+    }
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
     h1 {
+      text-align: center;
       color: #4cc9f0;
+      margin: 20px 0;
     }
-    canvas {
-      max-width: 100%;
+
+    @media (max-width: 768px) {
+      .dashboard-wrapper {
+        padding-top: 75%; /* То же соотношение сторон */
+      }
     }
   </style>
 </head>
 <body>
-  <h1>📈 График из Google Таблицы</h1>
-  <canvas id="myChart" height="100"></canvas>
-
-  <script>
-    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRkqc0HnxXWYQuMhj3372NTgJUPbGfFF8abMVFLq9hVG2p3J7-ouNRB1mEzihhCQX5teDgahRW5C4Nw/pub?gid=14089623&single=true&output=csv";
-
-    async function loadData() {
-      const response = await fetch(csvUrl);
-      const csv = await response.text();
-      const data = Papa.parse(csv, { header: true }).data;
-
-      // ⚠️ ЗАМЕНИ названия колонок на свои
-      const labels = data.map(row => row["Дата"]);
-      const values = data.map(row => parseFloat(row["Сумма"]));
-
-      return { labels, values };
-    }
-
-    async function renderChart() {
-      const { labels, values } = await loadData();
-
-      const ctx = document.getElementById('myChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'line', // или 'bar', 'pie'
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Сумма по дням',
-            data: values,
-            backgroundColor: 'rgba(76, 201, 240, 0.3)',
-            borderColor: '#4cc9f0',
-            borderWidth: 2,
-            fill: true,
-            tension: 0.3,
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-    }
-
-    renderChart();
-    setInterval(renderChart, 30000); // обновлять каждые 30 секунд
-  </script>
+  <div class="container">
+    <h1>📊 Дашборд Looker Studio</h1>
+    <div class="dashboard-wrapper">
+      <iframe 
+        src="https://lookerstudio.google.com/embed/reporting/e04b05a2-dd6b-49c5-a185-7b2b3704ca54/page/APRTF"
+        allowfullscreen
+        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+      </iframe>
+    </div>
+  </div>
 </body>
 </html>
