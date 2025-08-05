@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#4cc9f0">
+  <link rel="icon" href="logoIBDataLink.png">
+
   <meta charset="UTF-8">
   <title>Дашборд Looker Studio без логотипа</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
@@ -81,5 +85,13 @@
       sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
     </iframe>
   </div>
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(reg => console.log('Service Worker зарегистрирован', reg))
+      .catch(err => console.error('Ошибка регистрации Service Worker', err));
+  }
+</script>
+
 </body>
 </html>
