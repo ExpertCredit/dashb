@@ -12,10 +12,30 @@
       font-family: sans-serif;
     }
 
-    h1 {
+    /* Фиксированная шапка с эффектом стекла */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 1000;
       text-align: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.8rem;
       color: #4cc9f0;
-      margin: 20px 0;
+    }
+
+    /* Отступ сверху для тела страницы, чтобы не перекрывалось шапкой */
+    body {
+      padding-top: 70px;
     }
 
     .iframe-container {
@@ -39,14 +59,21 @@
     }
 
     @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+
       .iframe-container {
-        padding-top: 80%; /* Под мобильный экран */
+        padding-top: 85%; /* Немного больше на телефонах */
       }
     }
   </style>
 </head>
 <body>
-  <h1>📊 Дашборд Looker Studio</h1>
+  <header>
+    <h1>📊 Дашборд Looker Studio</h1>
+  </header>
+
   <div class="iframe-container">
     <iframe
       src="https://lookerstudio.google.com/embed/reporting/5a0c901a-99b7-40ed-9f16-0bf647f9d84b/page/p_a7b0hgzyud"
